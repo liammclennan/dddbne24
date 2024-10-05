@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Verified Specifications</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section><h1 class="r-fit-text">Verified Specifications</h1></section>
+				<section>
+					<section>
+					<img width="200%" src="./pong-video-game.gif" />
+					<aside class="notes">
+						Ask for a definition of pong. 
+				  	</aside>
+				</section>
+					  <section data-markdown>
+						<textarea data-template>
+							# Pong
+	
+							Pong is a game where two players bounce a ball between each other by moving a paddle up and down their side of the screen. 
+	
+							A point is scored when the other player misses the ball.
+						</textarea>
+						<aside class="notes"></aside>
+							Note that this definition is the kind that only helps if you already know the thing being described. 
+						  </aside>
+					</section>
+				</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
