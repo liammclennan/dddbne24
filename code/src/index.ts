@@ -1,3 +1,5 @@
+import * as test from "node:test";
+
 type Angle = number & { readonly __tag: unique symbol };
 const makeAngle = (n: number): Angle => {
     if (n < 0 || n > 360) throw new Error("0 <= Angle <= 360");
@@ -48,6 +50,7 @@ export function tick(game: Game): Game {
 
     // if moving would escape min/max X then bounce if on a paddle, else 
     // modify score and restart
+    return game;
 }
 
 export function begin(): Game {
