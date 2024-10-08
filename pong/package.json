@@ -4,11 +4,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "tsx --test --test-reporter tap *.test.ts"
+    "test": "tsx --test src/*.test.ts; mkdir -p ../results && tsx --test --test-reporter tap --test-reporter-destination \"../results/tests.tap\" src/*.test.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
   "description": "",
   "dependencies": {
     "tsx": "^4.19.1"

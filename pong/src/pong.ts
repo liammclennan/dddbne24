@@ -1,31 +1,31 @@
-type Angle = number & { readonly __tag: unique symbol };
-const makeAngle = (n: number): Angle => {
+export type Angle = number & { readonly __tag: unique symbol };
+export const angle = (n: number): Angle => {
     if (n < 0 || n > 360) throw new Error("0 <= Angle <= 360");
     return n as Angle;
 }
 
 type PositiveNumber = number & { readonly __tag: unique symbol };
-const makePositiveNumber = (n: number): PositiveNumber => {
+export const pos = (n: number): PositiveNumber => {
     if (n < 0) throw new Error("0 <= PositiveNumber");
     return n as PositiveNumber;
 };
 
-const BALL_SPEED = makePositiveNumber(10);
-const PADDLE_HEIGHT = makePositiveNumber(30);
-const MAX_X = makePositiveNumber(600);
-const MAX_Y =  makePositiveNumber(300);
+export const BALL_SPEED = pos(10);
+export const PADDLE_HEIGHT = pos(30);
+export const MAX_X = pos(600);
+export const MAX_Y =  pos(300);
 
-type Vector = {
+export type Vector = {
     speed: PositiveNumber,
     angleDegrees: Angle,
 };
 
-type Ball = {
+export type Ball = {
     position: [PositiveNumber, PositiveNumber],
     vector: Vector,
 }
 
-type Game = {    
+export type Game = {    
     ball: Ball,
     
     leftPaddleY: PositiveNumber,
@@ -54,19 +54,19 @@ export function tick(game: Game): Game {
 export function begin(): Game {
     return {
         ball: newBall(),
-        leftPaddleY: makePositiveNumber(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-        rightPaddleY: makePositiveNumber(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-        leftScore: makePositiveNumber(0),
-        rightScore: makePositiveNumber(0),
+        leftPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
+        rightPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
+        leftScore: pos(0),
+        rightScore: pos(0),
     };
 }
 
 function newBall(): Ball {
     return {
-        position: [makePositiveNumber(MAX_X / 2), makePositiveNumber(MAX_Y / 2)],
+        position: [pos(MAX_X / 2), pos(MAX_Y / 2)],
         vector: {
             speed: BALL_SPEED,
-            angleDegrees: makeAngle(90), // todo randomize
+            angleDegrees: angle(90), // todo randomize
         }
     };
 }
