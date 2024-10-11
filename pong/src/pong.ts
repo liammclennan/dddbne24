@@ -1,5 +1,5 @@
 export type Angle = number & { readonly __tag: unique symbol };
-export const angle = (n: number): Angle => {
+export const a = (n: number): Angle => {
     if (n < 0 || n > 360) throw new Error("0 <= Angle <= 360");
     return n as Angle;
 }
@@ -16,7 +16,7 @@ export const MAX_X = pos(600);
 export const MAX_Y =  pos(300);
 
 export type Vector = {
-    speed: PositiveNumber,
+    pixelsPerSecond: PositiveNumber,
     angleDegrees: Angle,
 };
 
@@ -48,7 +48,18 @@ export function tick(game: Game): Game {
 
     // if moving would escape min/max X then bounce if on a paddle, else 
     // modify score and restart
+    game.ball = tickBall(game.ball);
     return game;
+}
+
+function tickBall(ball: Ball): Ball {
+    return {
+        position: [
+            pos(Math.round(ball.position[0] + ball.vector.pixelsPerSecond * Math.cos(ball.vector.angleDegrees * Math.PI / 180))),
+            pos(Math.round(ball.position[1] + ball.vector.pixelsPerSecond * Math.sin(ball.vector.angleDegrees * Math.PI / 180))),
+        ],
+        vector: ball.vector,
+    };
 }
 
 export function begin(): Game {
@@ -65,8 +76,8 @@ function newBall(): Ball {
     return {
         position: [pos(MAX_X / 2), pos(MAX_Y / 2)],
         vector: {
-            speed: BALL_SPEED,
-            angleDegrees: angle(90), // todo randomize
+            pixelsPerSecond: BALL_SPEED,
+            angleDegrees: a(90), // todo randomize
         }
     };
 }

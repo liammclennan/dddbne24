@@ -11,5 +11,8 @@
   "description": "",
   "dependencies": {
     "tsx": "^4.19.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
   }
 }
