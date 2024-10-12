@@ -4,7 +4,7 @@ export const a = (n: number): Angle => {
     return n as Angle;
 }
 
-type PositiveNumber = number & { readonly __tag: unique symbol };
+export type PositiveNumber = number & { readonly __tag: unique symbol };
 export const pos = (n: number): PositiveNumber => {
     if (n < 0) throw new Error("0 <= PositiveNumber");
     return n as PositiveNumber;
@@ -77,7 +77,7 @@ function newBall(): Ball {
         position: [pos(MAX_X / 2), pos(MAX_Y / 2)],
         vector: {
             pixelsPerSecond: BALL_SPEED,
-            angleDegrees: a(90), // todo randomize
+            angleDegrees: a(Math.random() * 360),
         }
     };
 }

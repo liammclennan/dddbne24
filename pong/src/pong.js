@@ -56,7 +56,7 @@ function newBall() {
         position: [(0, exports.pos)(exports.MAX_X / 2), (0, exports.pos)(exports.MAX_Y / 2)],
         vector: {
             pixelsPerSecond: exports.BALL_SPEED,
-            angleDegrees: (0, exports.a)(90), // todo randomize
+            angleDegrees: (0, exports.a)(Math.random() * 360),
         }
     };
 }
