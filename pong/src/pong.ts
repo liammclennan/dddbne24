@@ -12,8 +12,6 @@ export const pos = (n: number): PositiveNumber => {
 
 export const BALL_SPEED = pos(10);
 export const PADDLE_HEIGHT = pos(30);
-export const MAX_X = pos(600);
-export const MAX_Y =  pos(300);
 
 export type Vector = {
     pixelsPerSecond: PositiveNumber,
@@ -28,11 +26,10 @@ export type Ball = {
 export type Game = {    
     ball: Ball,
     
-    leftPaddleY: PositiveNumber,
-    rightPaddleY: PositiveNumber,
-
-    leftScore: PositiveNumber,
-    rightScore: PositiveNumber,
+    paddleY: PositiveNumber,
+    
+    maxX: PositiveNumber,
+    maxY: PositiveNumber,
 }
 
 /**
@@ -62,19 +59,18 @@ function tickBall(ball: Ball): Ball {
     };
 }
 
-export function begin(): Game {
+export function begin(maxX: number, maxY: number): Game {
     return {
-        ball: newBall(),
-        leftPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-        rightPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-        leftScore: pos(0),
-        rightScore: pos(0),
+        ball: newBall(maxX, maxY),
+        paddleY: pos(maxY / 2 - (PADDLE_HEIGHT / 2)),
+        maxX: pos(maxX),
+        maxY: pos(maxY),
     };
 }
 
-function newBall(): Ball {
+function newBall(maxX: number, maxY: number): Ball {
     return {
-        position: [pos(MAX_X / 2), pos(MAX_Y / 2)],
+        position: [pos(maxX / 2), pos(maxY / 2)],
         vector: {
             pixelsPerSecond: BALL_SPEED,
             angleDegrees: a(Math.random() * 360),

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MAX_Y = exports.MAX_X = exports.PADDLE_HEIGHT = exports.BALL_SPEED = exports.pos = exports.a = void 0;
+exports.PADDLE_HEIGHT = exports.BALL_SPEED = exports.pos = exports.a = void 0;
 exports.tick = tick;
 exports.begin = begin;
 var a = function (n) {
@@ -17,8 +17,6 @@ var pos = function (n) {
 exports.pos = pos;
 exports.BALL_SPEED = (0, exports.pos)(10);
 exports.PADDLE_HEIGHT = (0, exports.pos)(30);
-exports.MAX_X = (0, exports.pos)(600);
-exports.MAX_Y = (0, exports.pos)(300);
 /**
  * Advances the state of the ball based on the game state.
  *
@@ -42,18 +40,17 @@ function tickBall(ball) {
         vector: ball.vector,
     };
 }
-function begin() {
+function begin(maxX, maxY) {
     return {
-        ball: newBall(),
-        leftPaddleY: (0, exports.pos)(exports.MAX_X / 2 - (exports.PADDLE_HEIGHT / 2)),
-        rightPaddleY: (0, exports.pos)(exports.MAX_X / 2 - (exports.PADDLE_HEIGHT / 2)),
-        leftScore: (0, exports.pos)(0),
-        rightScore: (0, exports.pos)(0),
+        ball: newBall(maxX, maxY),
+        paddleY: (0, exports.pos)(maxY / 2 - (exports.PADDLE_HEIGHT / 2)),
+        maxX: (0, exports.pos)(maxX),
+        maxY: (0, exports.pos)(maxY),
     };
 }
-function newBall() {
+function newBall(maxX, maxY) {
     return {
-        position: [(0, exports.pos)(exports.MAX_X / 2), (0, exports.pos)(exports.MAX_Y / 2)],
+        position: [(0, exports.pos)(maxX / 2), (0, exports.pos)(maxY / 2)],
         vector: {
             pixelsPerSecond: exports.BALL_SPEED,
             angleDegrees: (0, exports.a)(Math.random() * 360),

@@ -1,24 +1,23 @@
 import {test} from "node:test";
 import assert from "node:assert";
 import {Some} from "./some";
-import {a, Game} from "./pong";
-import * as Pong from "./pong";
+import {type Game, tick} from "./pong";
 
 test('the ball starts in the center of the game area', (t) => {
-    const freshGame = Pong.begin();
-    assertApproxEqual(freshGame.ball.position[0] * 2, Pong.MAX_X);
-    assertApproxEqual(freshGame.ball.position[1] * 2, Pong.MAX_Y);
+    const freshGame = Some.game();
+    assertApproxEqual(freshGame.ball.position[0] * 2, freshGame.maxX);
+    assertApproxEqual(freshGame.ball.position[1] * 2, freshGame.maxY);
 });
 
 test("the ball obeys Newton's 1st law", (t) => {
     for (var i = 0; i < 50; i++) {
         let angle = Some.number().between(1, 359).take(1).next().value;
-        let game: Game = Some.game(a(angle));
+        let game: Game = Some.game(angle);
         let [previousDeltaX, previousDeltaY] = [0,0];
 
         for (var j = 0; i < 5; i++) {
             let [ballX,ballY] = game.ball.position
-            game = Pong.tick(game);
+            game = tick(game);
 
             let [deltaX, deltaY] = [game.ball.position[0] - ballX, game.ball.position[1] - ballY];
 
@@ -41,8 +40,8 @@ test("the ball obeys Newton's 1st law", (t) => {
 
 test("the ball does not always start in the same direction", (t) => {
     assert.notEqual(
-        Pong.begin().ball.vector.angleDegrees,
-        Pong.begin().ball.vector.angleDegrees
+        Some.game().ball.vector.angleDegrees,
+        Some.game().ball.vector.angleDegrees
     );
 });
 

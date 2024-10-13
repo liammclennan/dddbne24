@@ -1,4 +1,7 @@
-import {pos, Game, MAX_X, MAX_Y, BALL_SPEED, PADDLE_HEIGHT, a, Angle} from "./pong";
+import {Game, BALL_SPEED, PADDLE_HEIGHT, a, Angle, begin} from "./pong";
+
+const width = 600;
+const height = 300;
 
 export class Some {
     min: number;
@@ -18,20 +21,10 @@ export class Some {
         yield gaussianRandom(this.min + (this.max - this.min) / 2, (this.max - this.min) / 10, this.min, this.max);
     }
 
-    static game(angleDegrees: Angle): Game {
-        return {
-            ball: {
-                position: [pos(MAX_X / 2), pos(MAX_Y / 2)],
-                vector: {
-                    pixelsPerSecond: BALL_SPEED,
-                    angleDegrees,
-                }
-            },
-            leftPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-            rightPaddleY: pos(MAX_X / 2 - (PADDLE_HEIGHT / 2)),
-            leftScore: pos(0),
-            rightScore: pos(0),
-        };
+    static game(angleDegrees: number = null): Game {
+        const g = begin(width, height);
+        g.ball.vector.angleDegrees = a(angleDegrees ?? g.ball.vector.angleDegrees);
+        return g;
     }
 }
 
