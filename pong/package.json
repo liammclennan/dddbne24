@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "tsc src/pong.ts; tsx --test src/*.test.ts; mkdir -p ../results && tsx --test --test-reporter tap --test-reporter-destination \"../results/tests.tap\" src/*.test.ts",
-    "start": "npx http-server web"
+    "test": "tsc src/pong.mts; tsx --test src/*.test.ts; mkdir -p ../results && tsx --test --test-reporter tap --test-reporter-destination \"../results/tests.tap\" src/*.test.ts",
+    "start": "tsc src/pong.mts && npx http-server src"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,7 @@
 import {test} from "node:test";
 import assert from "node:assert";
 import {Some} from "./some";
-import {type Game, tick} from "./pong";
+import {type Game} from "./pong.mts";
 
 test('the ball starts in the center of the game area', (t) => {
     const freshGame = Some.game();
@@ -16,14 +16,16 @@ test("the ball obeys Newton's 1st law", (t) => {
         let [previousDeltaX, previousDeltaY] = [0,0];
 
         for (var j = 0; i < 5; i++) {
-            let [ballX,ballY] = game.ball.position
-            game = tick(game);
+            let [ballX, ballY] = game.ball.position
+            game.tick();
 
             let [deltaX, deltaY] = [game.ball.position[0] - ballX, game.ball.position[1] - ballY];
 
             // check that the ball is moving
-            if (Math.abs((game.ball.vector.angleDegrees / 90) - Math.round(game.ball.vector.angleDegrees / 90)) > 0.05) {
+            if (game.ball.vector.dx > 0) {
                 assert.notEqual(deltaX, 0);
+            }
+            if (game.ball.vector.dy > 0) {
                 assert.notEqual(deltaY, 0);
             }
 
@@ -39,9 +41,10 @@ test("the ball obeys Newton's 1st law", (t) => {
 });
 
 test("the ball does not always start in the same direction", (t) => {
-    assert.notEqual(
-        Some.game().ball.vector.angleDegrees,
-        Some.game().ball.vector.angleDegrees
+    let [game1,game2] = [Some.game(), Some.game()];
+    assert.notDeepEqual(
+        [game1.ball.vector.dx, game1.ball.vector.dy],
+        [game2.ball.vector.dx, game2.ball.vector.dy],
     );
 });
 
