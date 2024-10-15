@@ -32,19 +32,32 @@ export class Ball {
         };
     }
 
-    tick(maxX: PositiveNumber, maxY: PositiveNumber) {
+    tick(maxX: PositiveNumber, maxY: PositiveNumber, paddleRange: [number, number]) {
         let [candidateX, candidateY] = [
             Math.round(this.position[0] + this.vector.dx),
             Math.round(this.position[1] + this.vector.dy)
         ];
 
-        if (candidateX > maxX || candidateX < 0) {
+        if (candidateX > (maxX - 30)) {
             this.bounceVertical();
             return;
         }
 
-        if (candidateY > maxY || candidateY < 0) {
+        if (candidateY > (maxY - 30) || candidateY < 0) {
             this.bounceHorizontal();
+            return;
+        }
+
+        // a hit!
+        if (candidateX < 0 && candidateY > paddleRange[0] && candidateY < paddleRange[1]) {
+            this.bounceVertical();
+
+            const paddle_span = paddleRange[1] - paddleRange[0];
+            const sweet_spot = [paddleRange[0] + paddle_span * 0.2, paddleRange[1] -  paddle_span * 0.2];
+
+            if (candidateY > sweet_spot[0] && candidateY < sweet_spot[1]) {
+                this.vector.dx = this.vector.dx * 1.1;
+            }
             return;
         }
 
@@ -59,11 +72,18 @@ export class Ball {
     bounceHorizontal() {
         this.vector.dy *= -1;
     }
+
+    faster() {
+        this.vector.dx = this.vector.dx * 1.005;
+        this.vector.dy = this.vector.dy * 1.005;
+    }
 }
 
 export class Game {
     maxX: PositiveNumber;
     maxY: PositiveNumber;
+    score: number = 0;
+    ticks: number = 0;
 
     ball: Ball;
 
@@ -78,11 +98,11 @@ export class Game {
     }
 
     up() {
-        this.paddleY = pos(Math.max(this.paddleY - 25, 15));
+        this.paddleY = pos(Math.max(this.paddleY - 30, 0));
     }
 
     down() {
-        this.paddleY = pos(Math.min(this.paddleY + 25, 255));
+        this.paddleY = pos(Math.min(this.paddleY + 30, 240));
     }
 
     /**
@@ -92,13 +112,18 @@ export class Game {
      * @returns the next state of the ball
      */
     tick() {
-        // main behaviour is to move according to Newton's 1st law
+        this.ticks += 1;
+        this.ball.tick(this.maxX, this.maxY, [this.paddleY-5, this.paddleY + PADDLE_HEIGHT+5]);
 
-        // if moving would escape min/max Y then bounce
+        if (this.ticks % 50 === 0) {
+            this.ball.faster();
+        }
 
-        // if moving would escape min/max X then bounce if on a paddle, else
-        // modify score and restart
-        this.ball.tick(this.maxX, this.maxY);
+        // missed
+        if (this.ball.position[0] < 0) {
+            this.score -= 1;
+            this.ball = this.newBall(this.ball.vector.pixelsPerTick);
+        }
         return this;
     }
 

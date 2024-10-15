@@ -1,10 +1,14 @@
 import { React, ReactDOM, html } from "./deps.js";
 import * as Pong from "/pong.mjs";
 
-const BALL_PIXELS_PER_SECOND = 200;
-const REFRESH_RATE = 60;
-
-let game = Pong.begin(800, 300, BALL_PIXELS_PER_SECOND / REFRESH_RATE);
+const App = (props) => {
+    return html`<div>
+        <div className="net"/>
+        <${Ball} ball=${props.game.ball} />
+        <${Paddle} side=${"left"} offset=${props.game.paddleY}/>
+            <${ScoreBoard} score=${props.game.score} />
+    </div>`;
+}
 
 const Paddle = (props) => {
     const l = props.side == "left" ? 0 : 792;
@@ -16,18 +20,16 @@ const Paddle = (props) => {
 }
 
 const Ball = (props) => {
-    return html`<div className="ball" style="${{
-        top: props.ball.position[1], 
-        left: props.ball.position[0]
-    }}"></div>`;
+    return html`
+        <div className="ball" style="${{
+            top: props.ball.position[1],
+            left: props.ball.position[0]
+        }}"></div>`;
 };
 
-const App = (props) => {
-    return html`<div>
-        <div className="net"/>
-        <${Ball} ball=${props.game.ball} />
-        <${Paddle} side=${"left"} offset=${props.game.paddleY}/>
-    </div>`;
+const ScoreBoard = ({score}) => {
+    return html`
+        <div className="score">${score}</div>`;
 }
 
 Mousetrap.bind('up', function() {
@@ -47,7 +49,10 @@ function render(game) {
     );
 }
 
+const BALL_PIXELS_PER_SECOND = 200;
+const REFRESH_RATE = 60;
 
+let game = Pong.begin(800, 300, BALL_PIXELS_PER_SECOND / REFRESH_RATE);
 
 setInterval(() => {
     game = game.tick();

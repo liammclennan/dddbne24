@@ -19,17 +19,27 @@ var Ball = /** @class */ (function () {
             dy: pixelsPerTick * Math.cos(angle * (Math.PI / 180)),
         };
     }
-    Ball.prototype.tick = function (maxX, maxY) {
+    Ball.prototype.tick = function (maxX, maxY, paddleRange) {
         var _a = [
             Math.round(this.position[0] + this.vector.dx),
             Math.round(this.position[1] + this.vector.dy)
         ], candidateX = _a[0], candidateY = _a[1];
-        if (candidateX > maxX || candidateX < 0) {
+        if (candidateX > (maxX - 30)) {
             this.bounceVertical();
             return;
         }
-        if (candidateY > maxY || candidateY < 0) {
+        if (candidateY > (maxY - 30) || candidateY < 0) {
             this.bounceHorizontal();
+            return;
+        }
+        // a hit!
+        if (candidateX < 0 && candidateY > paddleRange[0] && candidateY < paddleRange[1]) {
+            this.bounceVertical();
+            var paddle_span = paddleRange[1] - paddleRange[0];
+            var sweet_spot = [paddleRange[0] + paddle_span * 0.2, paddleRange[1] - paddle_span * 0.2];
+            if (candidateY > sweet_spot[0] && candidateY < sweet_spot[1]) {
+                this.vector.dx = this.vector.dx * 1.1;
+            }
             return;
         }
         this.position[0] = candidateX;
@@ -41,21 +51,27 @@ var Ball = /** @class */ (function () {
     Ball.prototype.bounceHorizontal = function () {
         this.vector.dy *= -1;
     };
+    Ball.prototype.faster = function () {
+        this.vector.dx = this.vector.dx * 1.005;
+        this.vector.dy = this.vector.dy * 1.005;
+    };
     return Ball;
 }());
 export { Ball };
 var Game = /** @class */ (function () {
     function Game(maxX, maxY, ballPixelsPerTick) {
+        this.score = 0;
+        this.ticks = 0;
         this.maxX = maxX;
         this.maxY = maxY;
         this.ball = this.newBall(ballPixelsPerTick);
         this.paddleY = pos(maxY / 2 - (PADDLE_HEIGHT / 2));
     }
     Game.prototype.up = function () {
-        this.paddleY = pos(Math.max(this.paddleY - 25, 15));
+        this.paddleY = pos(Math.max(this.paddleY - 30, 0));
     };
     Game.prototype.down = function () {
-        this.paddleY = pos(Math.min(this.paddleY + 25, 255));
+        this.paddleY = pos(Math.min(this.paddleY + 30, 240));
     };
     /**
      * Advances the state of the ball based on the game state.
@@ -64,11 +80,16 @@ var Game = /** @class */ (function () {
      * @returns the next state of the ball
      */
     Game.prototype.tick = function () {
-        // main behaviour is to move according to Newton's 1st law
-        // if moving would escape min/max Y then bounce
-        // if moving would escape min/max X then bounce if on a paddle, else
-        // modify score and restart
-        this.ball.tick(this.maxX, this.maxY);
+        this.ticks += 1;
+        this.ball.tick(this.maxX, this.maxY, [this.paddleY - 5, this.paddleY + PADDLE_HEIGHT + 5]);
+        if (this.ticks % 50 === 0) {
+            this.ball.faster();
+        }
+        // missed
+        if (this.ball.position[0] < 0) {
+            this.score -= 1;
+            this.ball = this.newBall(this.ball.vector.pixelsPerTick);
+        }
         return this;
     };
     Game.prototype.newBall = function (pixelsPerTick) {
