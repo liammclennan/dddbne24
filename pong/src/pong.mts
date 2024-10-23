@@ -1,16 +1,4 @@
-export type Angle = number & { readonly __tag: unique symbol };
-export const a = (n: number): Angle => {
-    if (n < 0 || n > 360) throw new Error("0 <= Angle <= 360");
-    return n as Angle;
-}
-
-export type PositiveNumber = number & { readonly __tag: unique symbol };
-export const pos = (n: number): PositiveNumber => {
-    if (n < 0) throw new Error("0 <= PositiveNumber");
-    return n as PositiveNumber;
-};
-
-export const PADDLE_HEIGHT = pos(60);
+export const PADDLE_HEIGHT = 60;
 
 export type Vector = {
     pixelsPerTick: number,
@@ -22,8 +10,7 @@ export class Ball {
     position: [number, number];
     vector: Vector;
 
-    constructor(position: [PositiveNumber, PositiveNumber], pixelsPerTick: number, angle: Angle) {
-        console.log(angle);
+    constructor(position: [number, number], pixelsPerTick: number, angle: number) {
         this.position = position;
         this.vector = {
             pixelsPerTick,
@@ -32,7 +19,7 @@ export class Ball {
         };
     }
 
-    tick(maxX: PositiveNumber, maxY: PositiveNumber, paddleRange: [number, number]) {
+    tick(maxX: number, maxY: number, paddleRange: [number, number]) {
         let [candidateX, candidateY] = [
             Math.round(this.position[0] + this.vector.dx),
             Math.round(this.position[1] + this.vector.dy)
@@ -80,29 +67,29 @@ export class Ball {
 }
 
 export class Game {
-    maxX: PositiveNumber;
-    maxY: PositiveNumber;
+    maxX: number;
+    maxY: number;
     score: number = 0;
     ticks: number = 0;
 
     ball: Ball;
 
-    paddleY: PositiveNumber;
+    paddleY: number;
 
-    constructor(maxX: PositiveNumber, maxY: PositiveNumber, ballPixelsPerTick: number) {
+    constructor(maxX: number, maxY: number, ballPixelsPerTick: number) {
         this.maxX = maxX;
         this.maxY = maxY;
 
         this.ball = this.newBall(ballPixelsPerTick);
-        this.paddleY = pos(maxY / 2 - (PADDLE_HEIGHT / 2));
+        this.paddleY = maxY / 2 - (PADDLE_HEIGHT / 2);
     }
 
     up() {
-        this.paddleY = pos(Math.max(this.paddleY - 30, 0));
+        this.paddleY = Math.max(this.paddleY - 30, 0);
     }
 
     down() {
-        this.paddleY = pos(Math.min(this.paddleY + 30, 240));
+        this.paddleY = Math.min(this.paddleY + 30, 240);
     }
 
     /**
@@ -129,15 +116,15 @@ export class Game {
 
     newBall(pixelsPerTick: number): Ball {
         return new Ball(
-            [pos(this.maxX / 2), pos(this.maxY / 2)],
+            [this.maxX / 2, this.maxY / 2],
                     pixelsPerTick,
-                    a(Math.random() * 80 + 220),
+                    Math.random() * 80 + 220,
         );
     }
 }
 
 export function begin(maxX: number, maxY: number, ballPixelsPerTick: number): Game {
-    return new Game(pos(maxX), pos(maxY), ballPixelsPerTick);
+    return new Game(maxX, maxY, ballPixelsPerTick);
 }
 
 

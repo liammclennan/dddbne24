@@ -1,4 +1,4 @@
-import {Game, PADDLE_HEIGHT, a, Angle, begin, Ball} from "./pong.mts";
+import {Game, begin, Ball} from "./pong.mts";
 
 const width = 600;
 const height = 300;
@@ -25,7 +25,7 @@ export class Some {
         const pixelsPerTick = 5;
         const g = begin(width, height, pixelsPerTick);
         if (angleDegrees !== null) {
-            g.ball = new Ball(g.ball.position, pixelsPerTick,  a(angleDegrees));
+            g.ball = new Ball(g.ball.position, pixelsPerTick,  angleDegrees);
         }
         return g;
     }

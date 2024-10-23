@@ -14,14 +14,15 @@ When the game begins:
 
 ### Wall Collisions
 
-* When the ball hits the top, right, or bottom edge of the game area it bounces, with the angle of incidence equal to the angle of reflection, plus a small random component to prevent infinite bounces at 90 and 270 degrees.
+* ::When the ball hits the top, right, or bottom edge of the game area it bounces, with the angle of incidence equal to the angle of reflection.::{grep="ball bouncing top-bottom,ball bouncing right side"}
 
 ![Angle of reflection diagram](reflection.png)
 
 ### Paddle Collisions
 
-When the ball hits the paddle it bounces, with the angle of incidence equal to the angle of reflection, plus a small random component to prevent infinite bounces at 90 and 270 degrees.
+* ::When the ball hits the paddle it bounces, with the angle of incidence equal to the angle of reflection.::{grep="when the ball hits the paddle it bounces"}
 
 ## Misses
 
-* When the player misses the ball (the ball reaches the left edge of the game area without overlapping the paddle) the player's score decreases by 1, and a new ball is started.  
+* When the player misses the ball (the ball reaches the left edge of the game area without overlapping the paddle) ::
+* the player's score decreases by 1::{grep="misses cost one point"}, and ::a new ball is started::{grep="after miss a new ball is started"}.  
