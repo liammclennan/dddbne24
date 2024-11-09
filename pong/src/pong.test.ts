@@ -86,11 +86,6 @@ test("after miss a new ball is started", (t) => {
     assert(game.ball != ball);
 });
 
-test.skip('synchronous passing test', (t) => {
-    // This test passes because it does not throw an exception.
-    assert.strictEqual(1, 2);
-});
-
 function assertApproxEqual(a: number, b: number, message = null) {
     assert(Math.abs(a-b) < Math.max(a,b) / 100, message);
 }

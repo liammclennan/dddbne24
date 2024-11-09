@@ -24,5 +24,4 @@ When the game begins:
 
 ## Misses
 
-* When the player misses the ball (the ball reaches the left edge of the game area without overlapping the paddle) ::
-* the player's score decreases by 1::{grep="misses cost one point"}, and ::a new ball is started::{grep="after miss a new ball is started"}.  
+* When the player misses the ball (the ball reaches the left edge of the game area without overlapping the paddle) ::the player's score decreases by 1::{grep="misses cost one point"}, and ::a new ball is started::{grep="after miss a new ball is started"}.  
