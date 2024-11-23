@@ -11,3 +11,20 @@
 * "It's 1961" thought experiment
 * "survive time" means memory fades and the spec is all that's left (and the code).
 * rust example for separating thinking from doing
+
+### 004 Problems with specs
+
+* specification work has to be done anyway, but is it captured?
+
+### 005 Prior art
+
+* BDD is a way of writing tests that produces a specification. 
+
+Pros: stays in sync, outside-in style encourages thinking before doing. 
+Cons: Awkward way to write a spec. Have to be a programmer. 
+
+### 008 Pong
+
+Pong is a simple tennis simulation game. The player moves a paddle to hit the ball back at a wall. 
+
+Beginning, collisions, misses.
