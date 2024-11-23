@@ -1,4 +1,4 @@
-import {Game, begin, Ball} from "./pong.mts";
+import {Game, begin, Ball} from "../src/pong.mts";
 
 const width = 600;
 const height = 300;

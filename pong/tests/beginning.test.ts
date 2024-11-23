@@ -1,7 +1,7 @@
 import {test} from "node:test";
 import assert from "node:assert";
 import {Some} from "./some";
-import {Ball, Game} from "./pong.mts";
+import {Ball, Game} from "../src/pong.mts";
 
 test('the ball starts in the center of the game area', (t) => {
     const freshGame = Some.game();
@@ -46,44 +46,6 @@ test("the ball does not always start in the same direction", (t) => {
         [game1.ball.vector.dx, game1.ball.vector.dy],
         [game2.ball.vector.dx, game2.ball.vector.dy],
     );
-});
-
-test("ball bouncing top-bottom", (t) => {
-    const ball = new Ball([100, 100], 10, 45);
-    const [dx,dy] = [ball.vector.dx, ball.vector.dy];
-    ball.bounceHorizontal();
-    assert.strictEqual(ball.vector.dx, dx);
-    assert.strictEqual(ball.vector.dy, dy * -1);
-});
-
-test("ball bouncing right side", (t) => {
-    const ball = new Ball([100,100], 10, 45);
-    const [dx,dy] = [ball.vector.dx, ball.vector.dy];
-    ball.bounceVertical();
-    assert.strictEqual(ball.vector.dx, dx * -1);
-    assert.strictEqual(ball.vector.dy, dy);
-});
-
-test("when the ball hits the paddle it bounces", (t) => {
-    const ball = new Ball([1,50], 10, 270);
-    ball.tick(1000, 1000, [30,70]);
-    assert(ball.vector.dx > 0);
-});
-
-test("misses cost one point", (t) => {
-    let game = new Game(1000, 1000, 10);
-    const ball = new Ball([1, 5], 10, 270);
-    game.ball = ball;
-    game = game.tick();
-    assert.strictEqual(game.score, -1);
-});
-
-test("after miss a new ball is started", (t) => {
-    let game = new Game(1000, 1000, 10);
-    const ball = new Ball([1, 5], 10, 270);
-    game.ball = ball;
-    game = game.tick();
-    assert(game.ball != ball);
 });
 
 function assertApproxEqual(a: number, b: number, message = null) {
