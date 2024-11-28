@@ -23,6 +23,12 @@
 Pros: stays in sync, outside-in style encourages thinking before doing. 
 Cons: Awkward way to write a spec. Have to be a programmer. 
 
+### 006 A specification defining a bedroom
+
+Diff with 006b.
+
+Note that mocha/specflow style specs are much more difficult to read than plain md. 
+
 ### 008 Pong
 
 Pong is a simple tennis simulation game. The player moves a paddle to hit the ball back at a wall. 

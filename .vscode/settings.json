@@ -1,0 +1,7 @@
+{
+    "cucumberautocomplete.steps": [
+        "*.gherkin",
+        "slides/*.gherkin"
+    ],
+    "cucumberautocomplete.strictGherkinCompletion": true
+}
