@@ -2,6 +2,7 @@
 
 ### 002 how we got here
 
+* Story - QUT software engineering
 * Agile throws away the spec on work items
 * Sommerville right about what, wrong about why, spec as a weapon
 
