@@ -30,6 +30,10 @@ Diff with 006b.
 
 Note that mocha/specflow style specs are much more difficult to read than plain md. 
 
+Difficult to organize when they get large.
+
+Language specific. Need a different tool / spec for each programming language. 
+
 ### 008 Pong
 
 Pong is a simple tennis simulation game. The player moves a paddle to hit the ball back at a wall. 
