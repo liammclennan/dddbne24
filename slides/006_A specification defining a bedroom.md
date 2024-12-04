@@ -4,6 +4,7 @@ Many jurisdictions define the properties that a room must have to be considered 
 
 * the ceiling height is at least 2.4m
 * the window area is at least 10% of the floor area
-* the floor area is at least 6.5m2
+* the floor area is at least 6.5m2 (2.5m x 2.5m)
+
 
 [A BDD specification defining a bedroom](https://codepen.io/liammclennan/pen/NWQQBdB?editors=0010)
