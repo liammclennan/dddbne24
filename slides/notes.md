@@ -39,3 +39,5 @@ Language specific. Need a different tool / spec for each programming language.
 Pong is a simple tennis simulation game. The player moves a paddle to hit the ball back at a wall. 
 
 Beginning, collisions, misses.
+
+Copy bits from specification/Pong/Pong.md
